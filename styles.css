@@ -1,75 +1,81 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --movne-blue: #1a1f36;
-    --movne-blue-light: #2d3555;
-    --accent-color: #3b82f6;
+    --primary-color: #1a1f36;
+    --secondary-color: #3a4374;
+    --accent-color: #2563eb;
+    --background-color: #f8fafc;
+    --text-color: #1f2937;
+    --border-color: #e5e7eb;
     --success-color: #10b981;
     --error-color: #ef4444;
-    --text-color: #1f2937;
-    --text-light: #6b7280;
-    --border-color: #e5e7eb;
-    --bg-color: #f9fafb;
 }
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Assistant', sans-serif;
-    background-color: var(--bg-color);
+    background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.5;
     min-height: 100vh;
-    padding: 2rem 1rem;
-}
-
-.logo-container {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.movne-logo {
-    width: 180px;
-    height: auto;
 }
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.logo {
+    margin-bottom: 1.5rem;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-top: 0.5rem;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--secondary-color);
+    font-size: 1.25rem;
+}
+
+.form-container {
     background: white;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     padding: 2rem;
 }
 
-h1 {
-    color: var(--movne-blue);
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.form-intro {
-    text-align: center;
-    color: var(--text-light);
-    margin-bottom: 2rem;
-}
-
 .form-section {
     margin-bottom: 2.5rem;
-    padding: 1.5rem;
-    background: var(--bg-color);
+    padding: 2rem;
+    background: var(--background-color);
     border-radius: 0.75rem;
 }
 
 .form-section h2 {
-    color: var(--movne-blue);
-    font-size: 1.25rem;
+    color: var(--primary-color);
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     font-weight: 600;
 }
@@ -89,7 +95,7 @@ label {
     display: block;
     font-weight: 500;
     margin-bottom: 0.5rem;
-    color: var(--movne-blue);
+    color: var(--primary-color);
 }
 
 input[type="text"],
@@ -108,20 +114,7 @@ input[type="date"] {
 input:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.conditions {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
-}
-
-.conditions-title {
-    font-weight: 600;
-    color: var(--movne-blue);
-    margin-bottom: 1.5rem;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .radio-group {
@@ -134,30 +127,45 @@ input:focus {
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    padding: 0.75rem;
+    padding: 1rem;
     border-radius: 0.5rem;
+    background: white;
     transition: background-color 0.2s;
 }
 
 .radio-option:hover {
-    background-color: var(--bg-color);
+    background-color: rgba(37, 99, 235, 0.05);
 }
 
-.radio-option input[type="radio"] {
-    margin-top: 0.25rem;
+.section-intro {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
 }
 
-.radio-option label {
-    margin: 0;
-    font-weight: normal;
-    color: var(--text-color);
-    cursor: pointer;
+.agreement-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
 }
 
-button {
+.agreement-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.agreement-text {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+}
+
+.submit-button {
     width: 100%;
     padding: 1rem;
-    background-color: var(--movne-blue);
+    background-color: var(--accent-color);
     color: white;
     border: none;
     border-radius: 0.5rem;
@@ -166,14 +174,13 @@ button {
     cursor: pointer;
     transition: all 0.2s;
     position: relative;
-    overflow: hidden;
 }
 
-button:hover {
-    background-color: var(--movne-blue-light);
+.submit-button:hover {
+    background-color: #1d4ed8;
 }
 
-button:disabled {
+.submit-button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
@@ -196,47 +203,32 @@ button:disabled {
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-button.loading .button-text {
-    opacity: 0;
-}
-
-button.loading .button-loader {
-    display: block;
-}
-
-.toast-container {
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
-    z-index: 1000;
-}
-
 .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
-    color: white;
-    font-weight: 500;
-    opacity: 0;
-    transform: translateY(-1rem);
-    transition: all 0.3s;
-}
-
-.toast.show {
-    opacity: 1;
-    transform: translateY(0);
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
 }
 
 .toast.success {
     background-color: var(--success-color);
+    color: white;
 }
 
 .toast.error {
     background-color: var(--error-color);
+    color: white;
 }
 
 @media (max-width: 640px) {
     .container {
-        padding: 1.5rem;
+        padding: 1rem;
+        margin: 1rem;
     }
 
     .form-row {
