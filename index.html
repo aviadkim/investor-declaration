@@ -3,58 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>הצהרת משקיע מסווג יחיד</title>
+    <title>מובנה - הצהרת משקיע מסווג</title>
     <link href="styles.css" rel="stylesheet">
 </head>
 <body>
+    <div class="logo-container">
+        <svg class="movne-logo" viewBox="0 0 600 300" width="200">
+            <g fill="#1a1f36">
+                <path d="M150 50 h60 v30 h-60 z M240 50 h30 v30 h-30 z M300 50 h60 v30 h-60 z M150 100 h60 v60 h-60 z M240 100 h30 v60 h-30 z M300 100 h60 v60 h-60 z"/>
+            </g>
+        </svg>
+    </div>
+
     <div class="container">
-        <h1>הצהרת משקיע מסווג יחיד</h1>
+        <h1>הצהרת משקיע מסווג</h1>
+        <div class="form-intro">
+            אנא מלא/י את הפרטים הבאים בהתאם לתנאי הכשירות
+        </div>
         
-        <form id="investorForm">
-            <div class="form-group">
-                <label>שם מלא:</label>
-                <input type="text" name="fullName" required>
+        <form id="investorForm" class="branded-form">
+            <div class="form-section">
+                <h2>פרטים אישיים</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>שם פרטי</label>
+                        <input type="text" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>שם משפחה</label>
+                        <input type="text" name="lastName" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>תעודת זהות</label>
+                        <input type="text" name="idNumber" maxlength="9" required placeholder="9 ספרות">
+                    </div>
+                    <div class="form-group">
+                        <label>טלפון נייד</label>
+                        <input type="tel" name="phone" required dir="ltr" placeholder="050-0000000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>דוא"ל</label>
+                    <input type="email" name="email" required dir="ltr" placeholder="your@email.com">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>דוא"ל:</label>
-                <input type="email" name="email" required>
-            </div>
+            <div class="form-section">
+                <h2>הצהרת כשירות</h2>
+                <div class="form-group conditions">
+                    <p class="conditions-title">אני מצהיר/ה כי מתקיים לגביי אחד מהתנאים הבאים:</p>
+                    
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="condition1" name="condition" value="condition1" required>
+                            <label for="condition1">
+                                השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך שבבעלותי עולה על 8,364,177 ₪
+                            </label>
+                        </div>
 
-            <div class="form-group">
-                <p class="conditions-title">אנא בחר את התנאי המתאים:</p>
-                
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" name="condition" value="condition1" required>
-                        <label>
-                            השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך שבבעלותי עולה על 8,364,177 ₪
-                        </label>
-                    </div>
+                        <div class="radio-option">
+                            <input type="radio" id="condition2" name="condition" value="condition2" required>
+                            <label for="condition2">
+                                גובה הכנסתי השנתית, בכל אחת מהשנתיים האחרונות, עולה על 1,254,627 ₪ או הכנסת התא המשפחתי עולה על 1,881,940 ₪
+                            </label>
+                        </div>
 
-                    <div class="radio-option">
-                        <input type="radio" name="condition" value="condition2" required>
-                        <label>
-                            גובה הכנסתי השנתית, בכל אחת מהשנתיים האחרונות, עולה על 1,254,627 ₪ או הכנסת התא המשפחתי עולה על 1,881,940 ₪
-                        </label>
-                    </div>
-
-                    <div class="radio-option">
-                        <input type="radio" name="condition" value="condition3" required>
-                        <label>
-                            השווי הכולל של הנכסים הנזילים שבבעלותי עולה על 5,227,610 ₪ וגם גובה הכנסתי השנתית עולה על 627,313 ₪ ליחיד או 940,969 ₪ להכנסת התא המשפחתי
-                        </label>
+                        <div class="radio-option">
+                            <input type="radio" id="condition3" name="condition" value="condition3" required>
+                            <label for="condition3">
+                                השווי הכולל של הנכסים הנזילים שבבעלותי עולה על 5,227,610 ₪ וגם גובה הכנסתי השנתית עולה על 627,313 ₪ ליחיד או 940,969 ₪ להכנסת התא המשפחתי
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>תאריך:</label>
-                <input type="date" name="date" required>
+            <div class="form-section">
+                <h2>אישור וחתימה</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>תאריך</label>
+                        <input type="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>חתימה דיגיטלית (שם מלא)</label>
+                        <input type="text" name="signature" required>
+                    </div>
+                </div>
             </div>
 
-            <button type="submit">שלח הצהרה</button>
+            <button type="submit" id="submitBtn">
+                <span class="button-text">שלח הצהרה</span>
+                <span class="button-loader"></span>
+            </button>
         </form>
+    </div>
+
+    <div class="toast-container">
+        <div id="toast" class="toast"></div>
     </div>
 
     <script src="script.js"></script>

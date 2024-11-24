@@ -1,81 +1,249 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --movne-blue: #1a1f36;
+    --movne-blue-light: #2d3555;
+    --accent-color: #3b82f6;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --text-color: #1f2937;
+    --text-light: #6b7280;
+    --border-color: #e5e7eb;
+    --bg-color: #f9fafb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     font-family: 'Assistant', sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.movne-logo {
+    width: 180px;
+    height: auto;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
 }
 
 h1 {
+    color: var(--movne-blue);
+    font-size: 2rem;
+    font-weight: 700;
     text-align: center;
-    color: #333;
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
+}
+
+.form-intro {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.form-section {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: var(--bg-color);
+    border-radius: 0.75rem;
+}
+
+.form-section h2 {
+    color: var(--movne-blue);
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #444;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--movne-blue);
 }
 
 input[type="text"],
 input[type="email"],
+input[type="tel"],
 input[type="date"] {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: 'Assistant', sans-serif;
+    transition: all 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.conditions {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
 }
 
 .conditions-title {
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--movne-blue);
+    margin-bottom: 1.5rem;
 }
 
 .radio-group {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1rem;
 }
 
 .radio-option {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.radio-option:hover {
+    background-color: var(--bg-color);
 }
 
 .radio-option input[type="radio"] {
-    margin-top: 5px;
+    margin-top: 0.25rem;
+}
+
+.radio-option label {
+    margin: 0;
+    font-weight: normal;
+    color: var(--text-color);
+    cursor: pointer;
 }
 
 button {
-    background-color: #0066cc;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--movne-blue);
     color: white;
-    padding: 12px 24px;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 16px;
-    display: block;
-    margin: 30px auto 0;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
 }
 
 button:hover {
-    background-color: #0052a3;
+    background-color: var(--movne-blue-light);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.button-loader {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+button.loading .button-text {
+    opacity: 0;
+}
+
+button.loading .button-loader {
+    display: block;
+}
+
+.toast-container {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.toast {
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(-1rem);
+    transition: all 0.3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.success {
+    background-color: var(--success-color);
+}
+
+.toast.error {
+    background-color: var(--error-color);
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-section {
+        padding: 1rem;
+    }
 }
