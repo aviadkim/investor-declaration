@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הצהרת משקיע מסווג יחיד</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>הצהרת משקיע מסווג יחיד</h1>
+        
+        <form id="investorForm">
+            <div class="form-group">
+                <label>שם מלא:</label>
+                <input type="text" name="fullName" required>
+            </div>
+
+            <div class="form-group">
+                <label>דוא"ל:</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <p class="conditions-title">אנא בחר את התנאי המתאים:</p>
+                
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="condition" value="condition1" required>
+                        <label>
+                            השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך שבבעלותי עולה על 8,364,177 ₪
+                        </label>
+                    </div>
+
+                    <div class="radio-option">
+                        <input type="radio" name="condition" value="condition2" required>
+                        <label>
+                            גובה הכנסתי השנתית, בכל אחת מהשנתיים האחרונות, עולה על 1,254,627 ₪ או הכנסת התא המשפחתי עולה על 1,881,940 ₪
+                        </label>
+                    </div>
+
+                    <div class="radio-option">
+                        <input type="radio" name="condition" value="condition3" required>
+                        <label>
+                            השווי הכולל של הנכסים הנזילים שבבעלותי עולה על 5,227,610 ₪ וגם גובה הכנסתי השנתית עולה על 627,313 ₪ ליחיד או 940,969 ₪ להכנסת התא המשפחתי
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>תאריך:</label>
+                <input type="date" name="date" required>
+            </div>
+
+            <button type="submit">שלח הצהרה</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
