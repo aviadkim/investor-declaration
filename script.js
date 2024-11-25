@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let signaturePad;
     
     const canvas = document.getElementById('signatureCanvas');
+    const signatureFile = document.getElementById('signatureFile');
+    
     if (canvas) {
         signaturePad = new SignaturePad(canvas, {
             minWidth: 1,
@@ -24,13 +26,42 @@ document.addEventListener('DOMContentLoaded', function() {
             signaturePad.clear();
             document.getElementById('signatureData').value = '';
         });
+
+        // הוספת תמיכה בהעלאת קובץ חתימה
+        signatureFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        
+                        // חישוב גודל ומיקום התמונה לתצוגה מיטבית
+                        const scale = Math.min(
+                            canvas.width / img.width,
+                            canvas.height / img.height
+                        ) * 0.8;
+                        
+                        const x = (canvas.width - img.width * scale) / 2;
+                        const y = (canvas.height - img.height * scale) / 2;
+                        
+                        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+                        document.getElementById('signatureData').value = canvas.toDataURL();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     }
 
     document.getElementById('investorForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        if (signaturePad && signaturePad.isEmpty()) {
-            showToast('נא להוסיף חתימה', 'error');
+        if (signaturePad && signaturePad.isEmpty() && !document.getElementById('signatureData').value) {
+            showToast('נא להוסיף חתימה או להעלות קובץ חתימה', 'error');
             return;
         }
 
@@ -46,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
             
-            if (signaturePad) {
+            if (!data.signature) {
                 data.signature = signaturePad.toDataURL();
             }
 
