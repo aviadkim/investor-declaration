@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>הצהרת משקיע מסווג - מובנה</title>
+    <title>הצהרת משקיע כשיר - מובנה</title>
     <link href="styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -11,9 +11,13 @@
     <div class="container">
         <div class="form-card">
             <div class="header">
-                <img src="./public/images/movne-logo.png" alt="מובנה" class="logo">
-                <h1>הצהרת משקיע מסווג</h1>
-                <p class="subtitle">להשקיע במגרש של הגדולים</p>
+                <div class="header-container">
+                    <img src="/images/movne-logo.png" alt="מובנה" class="logo">
+                    <div class="header-text">
+                        <h1>הצהרת משקיע כשיר</h1>
+                        <p class="subtitle">להשקיע במגרש של הגדולים</p>
+                    </div>
+                </div>
             </div>
 
             <form id="investorForm">
@@ -32,7 +36,7 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>תעודת זהות</label>
-                            <input type="text" name="idNumber" required maxlength="9">
+                            <input type="text" name="idNumber" required maxlength="9" pattern="\d{9}">
                         </div>
                         <div class="form-group">
                             <label>טלפון נייד</label>
@@ -59,7 +63,7 @@
                             </label>
                             
                             <label class="condition-card">
-                                <input type="radio" name="condition" value="condition3" required>
+                                <input type="radio" name="condition" value="condition2" required>
                                 <div class="condition-content">
                                     <div class="condition-amount">₪5,227,610</div>
                                     <div class="condition-text">שווי נכסים נזילים + הכנסה שנתית ₪627,313 ליחיד או ₪940,969 למשפחה</div>
@@ -67,7 +71,7 @@
                             </label>
                             
                             <label class="condition-card">
-                                <input type="radio" name="condition" value="condition2" required>
+                                <input type="radio" name="condition" value="condition3" required>
                                 <div class="condition-content">
                                     <div class="condition-amount">₪1,254,627</div>
                                     <div class="condition-text">גובה הכנסה שנתית או ₪1,881,940 להכנסת תא משפחתי</div>
@@ -77,7 +81,7 @@
                     </div>
 
                     <div class="agreement-box">
-                        <p>הנני נותן את הסכמתי מראש להיחשב כמשקיע מסווג לעניין סעיף 15א(ב)(1) לחוק ניירות ערך. כמו כן, הנני מאשר כי הנני מודע למשמעות היותי בגדר משקיע מסווג לעניין סעיף 15א(ב)(1) לחוק ניירות ערך ונותן לכם את הסכמתי לכך.</p>
+                        <p>הנני נותן את הסכמתי מראש להיחשב כמשקיע כשיר לעניין סעיף 15א(ב)(1) לחוק ניירות ערך. כמו כן, הנני מאשר כי הנני מודע למשמעות היותי בגדר משקיע כשיר לעניין סעיף 15א(ב)(1) לחוק ניירות ערך ונותן לכם את הסכמתי לכך.</p>
                     </div>
 
                     <div class="form-grid">
@@ -91,8 +95,6 @@
                                 <canvas id="signatureCanvas"></canvas>
                                 <div class="signature-actions">
                                     <button type="button" id="clearSignature" class="secondary-button">נקה חתימה</button>
-                                    <input type="file" id="uploadSignature" accept="image/*" style="display: none">
-                                    <button type="button" id="uploadSignatureBtn" class="secondary-button">העלה חתימה</button>
                                 </div>
                             </div>
                             <input type="hidden" name="signature" id="signatureData" required>
@@ -101,7 +103,7 @@
 
                     <button type="submit" class="submit-button">
                         <span class="button-text">שלח הצהרה</span>
-                        <span class="button-loader"></span>
+                        <div class="button-loader"></div>
                     </button>
                 </div>
             </form>
