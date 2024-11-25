@@ -240,3 +240,42 @@ input:focus {
         padding: 1rem;
     }
 }
+
+/* הוסף את זה בסוף הקובץ styles.css */
+
+.signature-container {
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: white;
+}
+
+#signatureCanvas {
+    width: 100%;
+    height: 200px;
+    background: white;
+    cursor: crosshair;
+}
+
+.signature-actions {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    background: var(--background-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.secondary-button {
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.secondary-button:hover {
+    background: var(--background-color);
+    border-color: var(--accent-color);
+}
