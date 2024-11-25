@@ -5,109 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>הצהרת משקיע מסווג - מובנה</title>
     <link href="styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gradient">
     <div class="container">
-        <div class="header">
-            <!-- לוגו מובנה SVG מובנה -->
-            <div class="logo">
-                <svg viewBox="0 0 600 300" width="150">
-                    <g fill="#1a1f36">
-                        <path d="M150 50 h60 v30 h-60 z M240 50 h30 v30 h-30 z M300 50 h60 v30 h-60 z M150 100 h60 v60 h-60 z M240 100 h30 v60 h-30 z M300 100 h60 v60 h-60 z"/>
-                    </g>
-                </svg>
-                <div class="logo-text">מובנה</div>
-            </div>
-            <h1>הצהרת משקיע מסווג יחיד</h1>
-            <p class="subtitle">להשקיע במגרש של הגדולים</p>
-        </div>
-        
-        <form id="investorForm" class="form-container">
-            <div class="form-section personal-details">
-                <h2>פרטים אישיים</h2>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>שם פרטי</label>
-                        <input type="text" name="firstName" required>
-                    </div>
-                    <div class="form-group">
-                        <label>שם משפחה</label>
-                        <input type="text" name="lastName" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>תעודת זהות</label>
-                    <input type="text" name="idNumber" maxlength="9" required placeholder="9 ספרות">
-                </div>
-
-                <div class="form-group">
-                    <label>טלפון נייד</label>
-                    <input type="tel" name="phone" required dir="ltr" placeholder="050-0000000">
-                </div>
-
-                <div class="form-group">
-                    <label>דוא"ל</label>
-                    <input type="email" name="email" required dir="ltr">
-                </div>
+        <div class="form-card">
+            <div class="header">
+                <img src="/images/movne-logo.png" alt="מובנה" class="logo">
+                <h1>הצהרת משקיע מסווג</h1>
+                <p class="subtitle">להשקיע במגרש של הגדולים</p>
             </div>
 
-            <div class="form-section eligibility">
-                <h2>הצהרת כשירות</h2>
-                <div class="eligibility-options">
-                    <p class="section-intro">אני מצהיר/ה כי מתקיים לגביי אחד מהתנאים הבאים:</p>
+            <form id="investorForm" class="form-content">
+                <div class="form-section">
+                    <h2>פרטים אישיים</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">שם פרטי</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">שם משפחה</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="idNumber">תעודת זהות</label>
+                        <input type="text" id="idNumber" name="idNumber" maxlength="9" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">טלפון נייד</label>
+                        <input type="tel" id="phone" name="phone" required dir="ltr">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">דוא"ל</label>
+                        <input type="email" id="email" name="email" required dir="ltr">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>הצהרת כשירות</h2>
+                    <p class="section-description">אני מצהיר/ה כי מתקיים לגביי אחד מהתנאים הבאים:</p>
                     
                     <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="condition1" name="condition" value="condition1" required>
-                            <label for="condition1">
-                                השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך שבבעלותי עולה על 8,364,177 ₪
-                            </label>
-                        </div>
+                        <label class="radio-option">
+                            <input type="radio" name="condition" value="condition1" required>
+                            <span class="radio-text">השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך שבבעלותי עולה על 8,364,177 ₪</span>
+                        </label>
 
-                        <div class="radio-option">
-                            <input type="radio" id="condition2" name="condition" value="condition2" required>
-                            <label for="condition2">
-                                גובה הכנסתי השנתית, בכל אחת מהשנתיים האחרונות, עולה על 1,254,627 ₪ או הכנסת התא המשפחתי עולה על 1,881,940 ₪
-                            </label>
-                        </div>
+                        <label class="radio-option">
+                            <input type="radio" name="condition" value="condition2" required>
+                            <span class="radio-text">גובה הכנסתי השנתית, בכל אחת מהשנתיים האחרונות, עולה על 1,254,627 ₪ או הכנסת התא המשפחתי עולה על 1,881,940 ₪</span>
+                        </label>
 
-                        <div class="radio-option">
-                            <input type="radio" id="condition3" name="condition" value="condition3" required>
-                            <label for="condition3">
-                                השווי הכולל של הנכסים הנזילים שבבעלותי עולה על 5,227,610 ₪ וגם גובה הכנסתי השנתית עולה על 627,313 ₪ ליחיד או 940,969 ₪ להכנסת התא המשפחתי
-                            </label>
-                        </div>
+                        <label class="radio-option">
+                            <input type="radio" name="condition" value="condition3" required>
+                            <span class="radio-text">השווי הכולל של הנכסים הנזילים שבבעלותי עולה על 5,227,610 ₪ וגם גובה הכנסתי השנתית עולה על 627,313 ₪ ליחיד או 940,969 ₪ להכנסת התא המשפחתי</span>
+                        </label>
                     </div>
                 </div>
 
-                <div class="agreement-section">
-                    <h3>הסכמה והצהרה</h3>
-                    <div class="agreement-text">
+                <div class="form-section">
+                    <h2>אישור וחתימה</h2>
+                    <div class="agreement-box">
                         <p>הנני נותן את הסכמתי מראש להיחשב כמשקיע מסווג לעניין סעיף 15א(ב)(1) לחוק ניירות ערך. כמו כן, הנני מאשר כי הנני מודע למשמעות היותי בגדר משקיע מסווג לעניין סעיף 15א(ב)(1) לחוק ניירות ערך ונותן לכם את הסכמתי לכך.</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="form-section signature">
-                <h2>אישור וחתימה</h2>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>תאריך</label>
-                        <input type="date" name="date" required>
-                    </div>
-                    <div class="form-group">
-                        <label>חתימה דיגיטלית (שם מלא)</label>
-                        <input type="text" name="signature" required>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="date">תאריך</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signature">חתימה דיגיטלית (שם מלא)</label>
+                            <input type="text" id="signature" name="signature" required>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <button type="submit" class="submit-button">
-                <span class="button-text">שלח הצהרה</span>
-                <span class="button-loader"></span>
-            </button>
-        </form>
+                <button type="submit" class="submit-button">
+                    <span class="button-text">שלח הצהרה</span>
+                    <div class="button-loader"></div>
+                </button>
+            </form>
+        </div>
     </div>
 
     <div id="toast" class="toast"></div>

@@ -1,9 +1,9 @@
 document.getElementById('investorForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const submitBtn = document.getElementById('submitBtn');
+    const submitBtn = document.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
-    submitBtn.classList.add('loading');
+    submitBtn.textContent = 'שולח...';
     
     const formData = new FormData(this);
     const data = {
@@ -33,10 +33,11 @@ document.getElementById('investorForm').addEventListener('submit', async functio
             throw new Error('שגיאה בשליחת הטופס');
         }
     } catch (error) {
+        console.error('Error:', error);
         showToast('שגיאה בשליחת הטופס. אנא נסה שוב', 'error');
     } finally {
         submitBtn.disabled = false;
-        submitBtn.classList.remove('loading');
+        submitBtn.textContent = 'שלח הצהרה';
     }
 });
 
@@ -44,21 +45,21 @@ function showToast(message, type) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
     toast.className = `toast ${type}`;
-    toast.classList.add('show');
+    toast.style.display = 'block';
     
     setTimeout(() => {
-        toast.classList.remove('show');
+        toast.style.display = 'none';
     }, 5000);
 }
 
-// Validate ID number length
+// וולידציה של תעודת זהות
 document.querySelector('input[name="idNumber"]').addEventListener('input', function(e) {
     if (this.value.length > 9) {
         this.value = this.value.slice(0, 9);
     }
 });
 
-// Format phone number
+// פורמט מספר טלפון
 document.querySelector('input[name="phone"]').addEventListener('input', function(e) {
     let phone = this.value.replace(/\D/g, '');
     if (phone.length > 3) {

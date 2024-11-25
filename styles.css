@@ -1,14 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&display=swap');
-
 :root {
     --primary-color: #1a1f36;
-    --secondary-color: #3a4374;
     --accent-color: #2563eb;
-    --background-color: #f8fafc;
     --text-color: #1f2937;
+    --text-light: #6b7280;
     --border-color: #e5e7eb;
-    --success-color: #10b981;
+    --background-color: #f8fafc;
     --error-color: #ef4444;
+    --success-color: #10b981;
 }
 
 * {
@@ -19,72 +17,70 @@
 
 body {
     font-family: 'Assistant', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.5;
+    background: linear-gradient(135deg, #1a1f36 0%, #2d3748 100%);
     min-height: 100vh;
+    padding: 2rem 1rem;
+    color: var(--text-color);
 }
 
 .container {
     max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
+    margin: 0 auto;
+}
+
+.form-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
-    margin-bottom: 1.5rem;
-}
-
-.logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-top: 0.5rem;
+    height: 60px;
+    margin-bottom: 1rem;
 }
 
 h1 {
     color: var(--primary-color);
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
 .subtitle {
-    color: var(--secondary-color);
-    font-size: 1.25rem;
+    color: var(--text-light);
+    font-size: 1.1rem;
 }
 
-.form-container {
-    background: white;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+.form-content {
     padding: 2rem;
 }
 
 .form-section {
-    margin-bottom: 2.5rem;
-    padding: 2rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
     background: var(--background-color);
     border-radius: 0.75rem;
 }
 
-.form-section h2 {
+h2 {
     color: var(--primary-color);
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     font-weight: 600;
 }
 
-.form-row {
+.form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
 }
 
 .form-group {
@@ -126,58 +122,61 @@ input:focus {
 .radio-option {
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
     padding: 1rem;
-    border-radius: 0.5rem;
     background: white;
-    transition: background-color 0.2s;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .radio-option:hover {
-    background-color: rgba(37, 99, 235, 0.05);
+    background: var(--background-color);
 }
 
-.section-intro {
-    color: var(--secondary-color);
-    margin-bottom: 1.5rem;
-    font-weight: 500;
+.radio-option input[type="radio"] {
+    margin-top: 0.25rem;
+    margin-left: 0.75rem;
 }
 
-.agreement-section {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: white;
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
-}
-
-.agreement-section h3 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
-}
-
-.agreement-text {
-    color: var(--secondary-color);
+.radio-text {
     font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.section-description {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.agreement-box {
+    background: white;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-light);
 }
 
 .submit-button {
     width: 100%;
     padding: 1rem;
-    background-color: var(--accent-color);
+    background: var(--accent-color);
     color: white;
     border: none;
     border-radius: 0.5rem;
-    font-size: 1.125rem;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     position: relative;
+    font-family: 'Assistant', sans-serif;
 }
 
 .submit-button:hover {
-    background-color: #1d4ed8;
+    background: #1d4ed8;
 }
 
 .submit-button:disabled {
@@ -209,33 +208,42 @@ input:focus {
     right: 2rem;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
-    background: white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-weight: 500;
     display: none;
+    animation: slideIn 0.3s ease-out;
     z-index: 1000;
 }
 
 .toast.success {
-    background-color: var(--success-color);
-    color: white;
+    background: var(--success-color);
 }
 
 .toast.error {
-    background-color: var(--error-color);
-    color: white;
+    background: var(--error-color);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 @media (max-width: 640px) {
-    .container {
-        padding: 1rem;
-        margin: 1rem;
-    }
-
-    .form-row {
+    .form-grid {
         grid-template-columns: 1fr;
     }
 
     .form-section {
         padding: 1rem;
+    }
+
+    .container {
+        padding: 0.5rem;
     }
 }
