@@ -22,14 +22,15 @@
                 </div>
             </div>
 
-            <form id="investorForm" action="https://formsubmit.co/info@movne.co.il" method="POST">
-                <!-- FormSubmit hidden fields -->
+            <form id="investorForm" action="https://formsubmit.co/aviad@kimfo-fs.com" method="POST">
+                <!-- שדות מוסתרים של FormSubmit -->
                 <input type="hidden" name="_subject" value="הצהרת משקיע כשיר חדשה">
                 <input type="hidden" name="_cc" value="">
                 <input type="hidden" name="_template" value="box">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_next" value="https://investor-declaration-production.up.railway.app/thanks">
-                
+                <input type="hidden" name="_debug" value="true"> <!-- שדה debug נוסף -->
+
                 <div class="form-content">
                     <div class="form-grid">
                         <div class="form-group">
@@ -57,7 +58,7 @@
                         <label>דוא"ל</label>
                         <input type="email" name="email" required dir="ltr">
                     </div>
- 
+
                     <div class="conditions-section">
                         <h2>תנאי כשירות</h2>
                         <p>אני מצהיר/ה כי מתקיים לגביי אחד מהתנאים הבאים:</p>
@@ -88,11 +89,11 @@
                             </label>
                         </div>
                     </div>
- 
+
                     <div class="agreement-box">
                         <p>הנני נותן את הסכמתי מראש להיחשב כמשקיע כשיר לעניין סעיף 15א(ב)(1) לחוק ניירות ערך. כמו כן, הנני מאשר כי הנני מודע למשמעות היותי בגדר משקיע כשיר לעניין סעיף 15א(ב)(1) לחוק ניירות ערך ונותן לכם את הסכמתי לכך.</p>
                     </div>
- 
+
                     <div class="form-grid">
                         <div class="form-group">
                             <label>תאריך</label>
@@ -111,7 +112,7 @@
                             <input type="hidden" name="signature" id="signatureData" required>
                         </div>
                     </div>
- 
+
                     <button type="submit" class="submit-button">
                         <span class="button-text">שלח הצהרה</span>
                         <div class="button-loader"></div>
@@ -120,9 +121,9 @@
             </form>
         </div>
     </div>
- 
+
     <div id="toast" class="toast"></div>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
     <script src="script.js"></script>
- </body>
- </html>
+</body>
+</html>
