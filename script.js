@@ -1,9 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // אתחול EmailJS
-    emailjs.init({
-        publicKey: "7GrJ0WpTT2VWLNhLL"
-    });
+// URL של Google Apps Script
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdlXSSliTpvUzkJcxPWF4_jhihmino3P3tVe0h-zX7vtT3x1R3IQpjOAnvwBg6Ge3CVA/exec';
 
+document.addEventListener('DOMContentLoaded', function() {
     let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
     const signatureFile = document.getElementById('signatureFile');
@@ -59,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.getElementById('investorForm').addEventListener('submit', function(e) {
+    document.getElementById('investorForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         console.log('Form submission started');
 
@@ -77,50 +75,48 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
         }
 
-        const templateParams = {
-            to_name: "Movne Team",
-            from_name: `${document.querySelector('input[name="name"]').value} ${document.querySelector('input[name="last_name"]').value}`,
-            reply_to: document.querySelector('input[name="email"]').value,
-            subject: "הצהרת משקיע כשיר חדשה",
-            message: `
-                הצהרת משקיע כשיר חדשה:
-
-                שם פרטי: ${document.querySelector('input[name="name"]').value}
-                שם משפחה: ${document.querySelector('input[name="last_name"]').value}
-                תעודת זהות: ${document.querySelector('input[name="id_number"]').value}
-                טלפון: ${document.querySelector('input[name="phone"]').value}
-                דוא"ל: ${document.querySelector('input[name="email"]').value}
-                תנאי כשירות: ${document.querySelector('input[name="condition"]:checked').value}
-                תאריך: ${document.querySelector('input[name="date"]').value}
-            `,
+        // הכנת הנתונים לשליחה
+        const formData = {
+            firstName: document.querySelector('input[name="name"]').value,
+            lastName: document.querySelector('input[name="last_name"]').value,
+            idNumber: document.querySelector('input[name="id_number"]').value,
+            phone: document.querySelector('input[name="phone"]').value,
+            email: document.querySelector('input[name="email"]').value,
+            condition: document.querySelector('input[name="condition"]:checked').value,
+            date: document.querySelector('input[name="date"]').value,
             signature: document.getElementById('signatureData').value
         };
-
-        console.log('Form data prepared:', templateParams);
 
         // עדכון ממשק המשתמש
         submitBtn.disabled = true;
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
 
-        // שליחת המייל
-        emailjs.send("service_we6e19s", "template_3tglh8a", templateParams)
-            .then(function(response) {
-                console.log("SUCCESS!", response);
-                window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
-            })
-            .catch(function(error) {
-                console.error("FAILED...", error);
-                showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
-                
-                submitBtn.disabled = false;
-                buttonText.style.opacity = '1';
-                buttonLoader.style.display = 'none';
+        try {
+            // שליחה לGoogle Apps Script
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                mode: 'no-cors',
+                body: JSON.stringify(formData)
             });
+
+            console.log('Form submitted successfully');
+            window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
+
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
+            
+            submitBtn.disabled = false;
+            buttonText.style.opacity = '1';
+            buttonLoader.style.display = 'none';
+        }
     });
 });
 
-// פונקציות עזר
 function showToast(message, type) {
     const toast = document.getElementById('toast');
     toast.className = 'toast';
@@ -132,7 +128,6 @@ function showToast(message, type) {
     }, 5000);
 }
 
-// ולידציה של שדות הטופס
 document.querySelector('input[name="id_number"]').addEventListener('input', function(e) {
     this.value = this.value.replace(/\D/g, '');
     if (this.value.length > 9) {
