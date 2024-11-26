@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // אתחול EmailJS
+    (function() {
+        emailjs.init("7Grj0WpTT2VWLNhLL");
+    })();
+
     let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
     const signatureFile = document.getElementById('signatureFile');
@@ -73,17 +78,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // הכנת הנתונים לשליחה
+        const firstName = document.querySelector('input[name="name"]').value;
+        const lastName = document.querySelector('input[name="last_name"]').value;
         const formData = {
-            from_name: document.querySelector('input[name="name"]').value + " " + document.querySelector('input[name="last_name"]').value,
-            id_number: document.querySelector('input[name="id_number"]').value,
-            phone: document.querySelector('input[name="phone"]').value,
-            email: document.querySelector('input[name="email"]').value,
-            condition: document.querySelector('input[name="condition"]:checked').value,
-            date: document.querySelector('input[name="date"]').value,
-            signature: document.getElementById('signatureData').value
+            to_email: "info@movne.co.il",
+            from_name: firstName + " " + lastName,
+            subject: "הצהרת משקיע כשיר חדשה",
+            message: `
+                הצהרת משקיע כשיר חדשה
+                
+                שם פרטי: ${firstName}
+                שם משפחה: ${lastName}
+                תעודת זהות: ${document.querySelector('input[name="id_number"]').value}
+                טלפון: ${document.querySelector('input[name="phone"]').value}
+                דוא"ל: ${document.querySelector('input[name="email"]').value}
+                תנאי כשירות: ${document.querySelector('input[name="condition"]:checked').value}
+                תאריך: ${document.querySelector('input[name="date"]').value}
+                
+                חתימה (Base64):
+                ${document.getElementById('signatureData').value}
+            `
         };
-
-        console.log('Form data prepared:', formData);
 
         // עדכון ממשק המשתמש לפני השליחה
         submitBtn.disabled = true;
@@ -91,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonLoader.style.display = 'block';
 
         // שליחת המייל
-        emailjs.send("service_we6e19s", "template_cumSypf", formData)
+        emailjs.send("service_we6e19s", "email", formData)
             .then(function(response) {
                 console.log("SUCCESS!", response);
                 window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
