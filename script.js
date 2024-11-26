@@ -1,10 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // אתחול EmailJS
-    emailjs.init({
-        publicKey: "7Grj0WpTT2VWLNhLL",
-        blockHeadless: true,
-        limitRate: true
-    });
+    // אתחול EmailJS עם המפתח הנכון
+    emailjs.init("7GrJ0WpTT2VWLNhLL");
 
     let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
@@ -61,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.getElementById('investorForm').addEventListener('submit', async function(e) {
+    document.getElementById('investorForm').addEventListener('submit', function(e) {
         e.preventDefault();
         console.log('Form submission started');
 
@@ -79,10 +75,12 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
         }
 
+        // הכנת הנתונים לשליחה
         const templateParams = {
-            to_email: "info@movne.co.il",
+            to_name: "Movne Team",
             from_name: `${document.querySelector('input[name="name"]').value} ${document.querySelector('input[name="last_name"]').value}`,
             reply_to: document.querySelector('input[name="email"]').value,
+            subject: "הצהרת משקיע כשיר חדשה",
             message: `
                 הצהרת משקיע כשיר חדשה:
 
@@ -104,23 +102,25 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
 
-        try {
-            const response = await emailjs.send(
-                "service_we6e19s",  // Your service ID
-                "template_ho8ecdw", // Your template ID
-                templateParams
-            );
-            
-            console.log("SUCCESS!", response);
-            window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
-        } catch (error) {
-            console.error("FAILED...", error);
-            showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
-            
-            submitBtn.disabled = false;
-            buttonText.style.opacity = '1';
-            buttonLoader.style.display = 'none';
-        }
+        // שליחת המייל עם המזהים הנכונים
+        emailjs.send(
+            "service_we6e19s",           // Service ID
+            "template_ho8ecdw",          // Template ID
+            templateParams
+        ).then(
+            function(response) {
+                console.log("SUCCESS!", response);
+                window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
+            }, 
+            function(error) {
+                console.error("FAILED...", error);
+                showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
+                
+                submitBtn.disabled = false;
+                buttonText.style.opacity = '1';
+                buttonLoader.style.display = 'none';
+            }
+        );
     });
 });
 
