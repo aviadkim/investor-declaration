@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('signatureData').value = '';
         });
 
-        // הוספת תמיכה בהעלאת קובץ חתימה
         signatureFile.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         const ctx = canvas.getContext('2d');
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
                         
-                        // חישוב גודל ומיקום התמונה לתצוגה מיטבית
                         const scale = Math.min(
                             canvas.width / img.width,
                             canvas.height / img.height
@@ -63,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.getElementById('investorForm').addEventListener('submit', async function(e) {
+    document.getElementById('investorForm').addEventListener('submit', function(e) {
         if (signaturePad && signaturePad.isEmpty() && !document.getElementById('signatureData').value) {
             e.preventDefault();
             showToast('נא להוסיף חתימה או להעלות קובץ חתימה', 'error');
@@ -82,16 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
 
-        try {
-            showToast('הטופס נשלח בהצלחה! צוות מובנה יצור איתך קשר בהקדם', 'success');
-        } catch (error) {
-            console.error('Error:', error);
-            e.preventDefault();
-            showToast('שגיאה בשליחת הטופס. אנא נסה שוב', 'error');
-            submitBtn.disabled = false;
-            buttonText.style.opacity = '1';
-            buttonLoader.style.display = 'none';
-        }
+        // נאפשר לטופס להישלח
+        return true;
     });
 });
 
@@ -106,7 +96,7 @@ function showToast(message, type) {
     }, 5000);
 }
 
-document.querySelector('input[name="idNumber"]').addEventListener('input', function(e) {
+document.querySelector('input[name="id_number"]').addEventListener('input', function(e) {
     this.value = this.value.replace(/\D/g, '');
     if (this.value.length > 9) {
         this.value = this.value.slice(0, 9);

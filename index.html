@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <form id="investorForm" action="https://formsubmit.co/el/kibujo" method="POST">
+            <form id="investorForm" action="https://formsubmit.co/info@movne.co.il" method="POST">
                 <!-- FormSubmit hidden fields -->
                 <input type="hidden" name="_subject" value="הצהרת משקיע כשיר חדשה">
                 <input type="hidden" name="_cc" value="">
@@ -34,18 +34,18 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>שם פרטי</label>
-                            <input type="text" name="firstName" required>
+                            <input type="text" name="name" required>
                         </div>
                         <div class="form-group">
                             <label>שם משפחה</label>
-                            <input type="text" name="lastName" required>
+                            <input type="text" name="last_name" required>
                         </div>
                     </div>
 
                     <div class="form-grid">
                         <div class="form-group">
                             <label>תעודת זהות</label>
-                            <input type="text" name="idNumber" required maxlength="9" pattern="\d{9}">
+                            <input type="text" name="id_number" required maxlength="9" pattern="\d{9}">
                         </div>
                         <div class="form-group">
                             <label>טלפון נייד</label>
@@ -57,14 +57,14 @@
                         <label>דוא"ל</label>
                         <input type="email" name="email" required dir="ltr">
                     </div>
-
+ 
                     <div class="conditions-section">
                         <h2>תנאי כשירות</h2>
                         <p>אני מצהיר/ה כי מתקיים לגביי אחד מהתנאים הבאים:</p>
                         
                         <div class="conditions-grid">
                             <label class="condition-card">
-                                <input type="radio" name="condition" value="8,364,177 ₪ - השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך" required>
+                                <input type="radio" name="condition" value="8,364,177" required>
                                 <div class="condition-content">
                                     <div class="condition-amount">₪8,364,177</div>
                                     <div class="condition-text">השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך</div>
@@ -72,7 +72,7 @@
                             </label>
                             
                             <label class="condition-card">
-                                <input type="radio" name="condition" value="5,227,610 ₪ - שווי נכסים נזילים + הכנסה שנתית" required>
+                                <input type="radio" name="condition" value="5,227,610" required>
                                 <div class="condition-content">
                                     <div class="condition-amount">₪5,227,610</div>
                                     <div class="condition-text">שווי נכסים נזילים + הכנסה שנתית ₪627,313 ליחיד או ₪940,969 למשפחה</div>
@@ -80,7 +80,7 @@
                             </label>
                             
                             <label class="condition-card">
-                                <input type="radio" name="condition" value="1,254,627 ₪ - הכנסה שנתית" required>
+                                <input type="radio" name="condition" value="1,254,627" required>
                                 <div class="condition-content">
                                     <div class="condition-amount">₪1,254,627</div>
                                     <div class="condition-text">גובה הכנסה שנתית או ₪1,881,940 להכנסת תא משפחתי</div>
@@ -88,11 +88,11 @@
                             </label>
                         </div>
                     </div>
-
+ 
                     <div class="agreement-box">
                         <p>הנני נותן את הסכמתי מראש להיחשב כמשקיע כשיר לעניין סעיף 15א(ב)(1) לחוק ניירות ערך. כמו כן, הנני מאשר כי הנני מודע למשמעות היותי בגדר משקיע כשיר לעניין סעיף 15א(ב)(1) לחוק ניירות ערך ונותן לכם את הסכמתי לכך.</p>
                     </div>
-
+ 
                     <div class="form-grid">
                         <div class="form-group">
                             <label>תאריך</label>
@@ -111,7 +111,7 @@
                             <input type="hidden" name="signature" id="signatureData" required>
                         </div>
                     </div>
-
+ 
                     <button type="submit" class="submit-button">
                         <span class="button-text">שלח הצהרה</span>
                         <div class="button-loader"></div>
@@ -120,9 +120,9 @@
             </form>
         </div>
     </div>
-
+ 
     <div id="toast" class="toast"></div>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
     <script src="script.js"></script>
-</body>
-</html>
+ </body>
+ </html>
