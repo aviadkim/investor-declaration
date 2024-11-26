@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // אתחול EmailJS עם המפתח הציבורי שלך
-    emailjs.init("7Grj0WpTT2VWLNhLL");
+    // אתחול EmailJS
+    emailjs.init({
+        publicKey: "7Grj0WpTT2VWLNhLL",
+        blockHeadless: false
+    });
     
     let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
@@ -83,8 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             email: document.querySelector('input[name="email"]').value,
             condition: document.querySelector('input[name="condition"]:checked').value,
             date: document.querySelector('input[name="date"]').value,
-            signature: document.getElementById('signatureData').value,
-            reply_to: document.querySelector('input[name="email"]').value
+            signature: document.getElementById('signatureData').value
         };
 
         console.log('Form data prepared:', formData);
@@ -95,21 +97,25 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonLoader.style.display = 'block';
 
         try {
-            console.log('Attempting to send email...');
+            console.log('Attempting to send email with:', {
+                serviceId: "service_we6e19s",
+                templateId: "template_cumSypf",
+                formDataKeys: Object.keys(formData)
+            });
+
             const response = await emailjs.send(
                 "service_we6e19s",
                 "template_cumSypf",
                 formData
             );
 
-            console.log("SUCCESS!", { status: response.status, text: response.text });
+            console.log("SUCCESS!", response);
             window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
         } catch (error) {
-            console.error("FAILED...", { 
+            console.error("FAILED...", {
                 error: error,
                 errorMessage: error.message,
-                errorText: error.text,
-                errorStack: error.stack
+                errorText: error.text
             });
             showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
             
