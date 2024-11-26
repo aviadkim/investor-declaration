@@ -1,10 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // אתחול EmailJS
-    emailjs.init({
-        publicKey: "7Grj0WpTT2VWLNhLL",
-        blockHeadless: false
-    });
-    
     let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
     const signatureFile = document.getElementById('signatureFile');
@@ -60,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.getElementById('investorForm').addEventListener('submit', async function(e) {
+    document.getElementById('investorForm').addEventListener('submit', function(e) {
         e.preventDefault();
         console.log('Form submission started');
 
@@ -96,33 +90,19 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
 
-        try {
-            console.log('Attempting to send email with:', {
-                serviceId: "service_we6e19s",
-                templateId: "template_cumSypf",
-                formDataKeys: Object.keys(formData)
+        // שליחת המייל
+        emailjs.send("service_we6e19s", "template_cumSypf", formData)
+            .then(function(response) {
+                console.log("SUCCESS!", response);
+                window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
+            }, function(error) {
+                console.error("FAILED...", error);
+                showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
+                
+                submitBtn.disabled = false;
+                buttonText.style.opacity = '1';
+                buttonLoader.style.display = 'none';
             });
-
-            const response = await emailjs.send(
-                "service_we6e19s",
-                "template_cumSypf",
-                formData
-            );
-
-            console.log("SUCCESS!", response);
-            window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
-        } catch (error) {
-            console.error("FAILED...", {
-                error: error,
-                errorMessage: error.message,
-                errorText: error.text
-            });
-            showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
-            
-            submitBtn.disabled = false;
-            buttonText.style.opacity = '1';
-            buttonLoader.style.display = 'none';
-        }
     });
 });
 
