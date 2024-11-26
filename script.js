@@ -77,36 +77,37 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
         }
 
-        // הכנת הנתונים לשליחה
         const firstName = document.querySelector('input[name="name"]').value;
         const lastName = document.querySelector('input[name="last_name"]').value;
+        const messageText = `
+            הצהרת משקיע כשיר חדשה:
+
+            שם פרטי: ${firstName}
+            שם משפחה: ${lastName}
+            תעודת זהות: ${document.querySelector('input[name="id_number"]').value}
+            טלפון: ${document.querySelector('input[name="phone"]').value}
+            דוא"ל: ${document.querySelector('input[name="email"]').value}
+            תנאי כשירות: ${document.querySelector('input[name="condition"]:checked').value}
+            תאריך: ${document.querySelector('input[name="date"]').value}
+            
+            חתימה בקובץ מצורף למטה
+        `;
+
+        // הכנת הנתונים לשליחה בפורמט הכי פשוט
         const formData = {
-            to_email: "info@movne.co.il",
-            from_name: firstName + " " + lastName,
-            subject: "הצהרת משקיע כשיר חדשה",
-            message: `
-                הצהרת משקיע כשיר חדשה
-                
-                שם פרטי: ${firstName}
-                שם משפחה: ${lastName}
-                תעודת זהות: ${document.querySelector('input[name="id_number"]').value}
-                טלפון: ${document.querySelector('input[name="phone"]').value}
-                דוא"ל: ${document.querySelector('input[name="email"]').value}
-                תנאי כשירות: ${document.querySelector('input[name="condition"]:checked').value}
-                תאריך: ${document.querySelector('input[name="date"]').value}
-                
-                חתימה (Base64):
-                ${document.getElementById('signatureData').value}
-            `
+            message: messageText,
+            signature: document.getElementById('signatureData').value
         };
+
+        console.log('Form data prepared:', formData);
 
         // עדכון ממשק המשתמש לפני השליחה
         submitBtn.disabled = true;
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
 
-        // שליחת המייל
-        emailjs.send("service_we6e19s", "email", formData)
+        // שליחת המייל עם ה-Template ID הנכון
+        emailjs.send("service_we6e19s", "template_ho8oc6w", formData)
             .then(function(response) {
                 console.log("SUCCESS!", response);
                 window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
