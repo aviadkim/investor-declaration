@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const canvas = document.getElementById('signatureCanvas');
     const signatureFile = document.getElementById('signatureFile');
+    const emailInput = document.querySelector('input[name="email"]');
+    
+    // עדכון שדה ה-CC בכל שינוי של המייל
+    emailInput.addEventListener('change', function() {
+        document.querySelector('input[name="_cc"]').value = this.value;
+    });
     
     if (canvas) {
         signaturePad = new SignaturePad(canvas, {
@@ -58,9 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('investorForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-
         if (signaturePad && signaturePad.isEmpty() && !document.getElementById('signatureData').value) {
+            e.preventDefault();
             showToast('נא להוסיף חתימה או להעלות קובץ חתימה', 'error');
             return;
         }
@@ -69,39 +74,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const buttonText = submitBtn.querySelector('.button-text');
         const buttonLoader = submitBtn.querySelector('.button-loader');
 
+        if (!signaturePad.isEmpty()) {
+            document.getElementById('signatureData').value = signaturePad.toDataURL();
+        }
+
         submitBtn.disabled = true;
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
 
         try {
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-            
-            if (!data.signature) {
-                data.signature = signaturePad.toDataURL();
-            }
-
-            const response = await fetch('/api/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                throw new Error('שגיאה בשליחת הטופס');
-            }
-
             showToast('הטופס נשלח בהצלחה! צוות מובנה יצור איתך קשר בהקדם', 'success');
-            this.reset();
-            if (signaturePad) {
-                signaturePad.clear();
-            }
         } catch (error) {
             console.error('Error:', error);
+            e.preventDefault();
             showToast('שגיאה בשליחת הטופס. אנא נסה שוב', 'error');
-        } finally {
             submitBtn.disabled = false;
             buttonText.style.opacity = '1';
             buttonLoader.style.display = 'none';

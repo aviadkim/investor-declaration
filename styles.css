@@ -60,7 +60,7 @@ body {
 }
 
 .logo {
-    height: 80px;
+    height: 120px; /* הגדלתי מ-80px */
     width: auto;
     display: block;
     margin-left: auto;
@@ -307,7 +307,7 @@ input:focus {
     }
 
     .logo {
-        height: 60px;
+        height: 90px; /* מותאם למובייל */
     }
 
     .container {

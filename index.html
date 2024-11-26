@@ -22,7 +22,14 @@
                 </div>
             </div>
 
-            <form id="investorForm">
+            <form id="investorForm" action="https://formsubmit.co/info@movne.co.il" method="POST">
+                <!-- FormSubmit hidden fields -->
+                <input type="hidden" name="_subject" value="הצהרת משקיע כשיר חדשה">
+                <input type="hidden" name="_cc" value="">
+                <input type="hidden" name="_template" value="box">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://investor-declaration-production.up.railway.app/thanks">
+                
                 <div class="form-content">
                     <div class="form-grid">
                         <div class="form-group">
@@ -57,7 +64,7 @@
                         
                         <div class="conditions-grid">
                             <label class="condition-card">
-                                <input type="radio" name="condition" value="condition1" required>
+                                <input type="radio" name="condition" value="8,364,177 ₪ - השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך" required>
                                 <div class="condition-content">
                                     <div class="condition-amount">₪8,364,177</div>
                                     <div class="condition-text">השווי הכולל של מזומנים, פיקדונות, נכסים פיננסיים וניירות ערך</div>
@@ -65,7 +72,7 @@
                             </label>
                             
                             <label class="condition-card">
-                                <input type="radio" name="condition" value="condition2" required>
+                                <input type="radio" name="condition" value="5,227,610 ₪ - שווי נכסים נזילים + הכנסה שנתית" required>
                                 <div class="condition-content">
                                     <div class="condition-amount">₪5,227,610</div>
                                     <div class="condition-text">שווי נכסים נזילים + הכנסה שנתית ₪627,313 ליחיד או ₪940,969 למשפחה</div>
@@ -73,7 +80,7 @@
                             </label>
                             
                             <label class="condition-card">
-                                <input type="radio" name="condition" value="condition3" required>
+                                <input type="radio" name="condition" value="1,254,627 ₪ - הכנסה שנתית" required>
                                 <div class="condition-content">
                                     <div class="condition-amount">₪1,254,627</div>
                                     <div class="condition-text">גובה הכנסה שנתית או ₪1,881,940 להכנסת תא משפחתי</div>
