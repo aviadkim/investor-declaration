@@ -75,12 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
         }
 
-        // הכנת הנתונים לשליחה
+        // הכנת הנתונים לשליחה בהתאם למשתנים בתבנית
         const formData = {
-            to_name: "מובנה",
             from_name: document.querySelector('input[name="name"]').value + " " + document.querySelector('input[name="last_name"]').value,
-            name: document.querySelector('input[name="name"]').value,
-            last_name: document.querySelector('input[name="last_name"]').value,
             id_number: document.querySelector('input[name="id_number"]').value,
             phone: document.querySelector('input[name="phone"]').value,
             email: document.querySelector('input[name="email"]').value,
@@ -90,11 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
             reply_to: document.querySelector('input[name="email"]').value
         };
 
-        console.log('Form data prepared', { 
-            formDataKeys: Object.keys(formData),
-            serviceId: 'service_we6e19s',
-            templateId: 'template_1snuekk'
-        });
+        console.log('Form data prepared:', formData);
 
         // עדכון ממשק המשתמש לפני השליחה
         submitBtn.disabled = true;
