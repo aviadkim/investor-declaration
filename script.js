@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
         }
 
-        // הכנת הנתונים לשליחה בהתאם למשתנים בתבנית
+        // הכנת הנתונים לשליחה
         const formData = {
             from_name: document.querySelector('input[name="name"]').value + " " + document.querySelector('input[name="last_name"]').value,
             id_number: document.querySelector('input[name="id_number"]').value,
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Attempting to send email...');
             const response = await emailjs.send(
                 "service_we6e19s",
-                "template_1snuekk",
+                "template_cumSypf",
                 formData
             );
 
