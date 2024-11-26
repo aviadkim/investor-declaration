@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('investorForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        console.log('Form submission started');
 
         if (signaturePad && signaturePad.isEmpty() && !document.getElementById('signatureData').value) {
             showToast('נא להוסיף חתימה או להעלות קובץ חתימה', 'error');
@@ -89,22 +90,34 @@ document.addEventListener('DOMContentLoaded', function() {
             reply_to: document.querySelector('input[name="email"]').value
         };
 
+        console.log('Form data prepared', { 
+            formDataKeys: Object.keys(formData),
+            serviceId: 'service_we6e19s',
+            templateId: 'template_1snuekk'
+        });
+
         // עדכון ממשק המשתמש לפני השליחה
         submitBtn.disabled = true;
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
 
         try {
+            console.log('Attempting to send email...');
             const response = await emailjs.send(
-                "service_we6e19s", // מזהה השירות
-                "template_krtho9m", // תחליף במזהה התבנית שקיבלת כשיצרת את התבנית
+                "service_we6e19s",
+                "template_1snuekk",
                 formData
             );
 
-            console.log("SUCCESS!", response.status, response.text);
+            console.log("SUCCESS!", { status: response.status, text: response.text });
             window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
         } catch (error) {
-            console.error("FAILED...", error);
+            console.error("FAILED...", { 
+                error: error,
+                errorMessage: error.message,
+                errorText: error.text,
+                errorStack: error.stack
+            });
             showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
             
             submitBtn.disabled = false;
