@@ -6,6 +6,8 @@
     <title>הצהרת משקיע כשיר - מובנה</title>
     <link href="styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- הוספת EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -22,15 +24,7 @@
                 </div>
             </div>
 
-            <form id="investorForm" action="https://formsubmit.co/aviad@kimfo-fs.com" method="POST">
-                <!-- שדות מוסתרים של FormSubmit -->
-                <input type="hidden" name="_subject" value="הצהרת משקיע כשיר חדשה">
-                <input type="hidden" name="_cc" value="">
-                <input type="hidden" name="_template" value="box">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://investor-declaration-production.up.railway.app/thanks">
-                <input type="hidden" name="_debug" value="true"> <!-- שדה debug נוסף -->
-
+            <form id="investorForm">
                 <div class="form-content">
                     <div class="form-grid">
                         <div class="form-group">

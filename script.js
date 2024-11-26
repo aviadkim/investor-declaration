@@ -1,14 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let signaturePad;
+    // אתחול EmailJS עם המפתח הציבורי שלך
+    emailjs.init("7Grj0WpTT2VWLNhLL");
     
+    let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
     const signatureFile = document.getElementById('signatureFile');
-    const emailInput = document.querySelector('input[name="email"]');
-    
-    // עדכון שדה ה-CC בכל שינוי של המייל
-    emailInput.addEventListener('change', function() {
-        document.querySelector('input[name="_cc"]').value = this.value;
-    });
     
     if (canvas) {
         signaturePad = new SignaturePad(canvas, {
@@ -52,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const y = (canvas.height - img.height * scale) / 2;
                         
                         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-                        document.getElementById('signatureData').value = canvas.toDataURL();
+                        document.getElementById('signatureData').value = canvas.toDataURL('image/jpeg', 0.5);
                     };
                     img.src = event.target.result;
                 };
@@ -61,9 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.getElementById('investorForm').addEventListener('submit', function(e) {
+    document.getElementById('investorForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
         if (signaturePad && signaturePad.isEmpty() && !document.getElementById('signatureData').value) {
-            e.preventDefault();
             showToast('נא להוסיף חתימה או להעלות קובץ חתימה', 'error');
             return;
         }
@@ -72,16 +69,48 @@ document.addEventListener('DOMContentLoaded', function() {
         const buttonText = submitBtn.querySelector('.button-text');
         const buttonLoader = submitBtn.querySelector('.button-loader');
 
+        // עדכון החתימה אם יש
         if (!signaturePad.isEmpty()) {
-            document.getElementById('signatureData').value = signaturePad.toDataURL();
+            document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
         }
 
+        // הכנת הנתונים לשליחה
+        const formData = {
+            to_name: "מובנה",
+            from_name: document.querySelector('input[name="name"]').value + " " + document.querySelector('input[name="last_name"]').value,
+            name: document.querySelector('input[name="name"]').value,
+            last_name: document.querySelector('input[name="last_name"]').value,
+            id_number: document.querySelector('input[name="id_number"]').value,
+            phone: document.querySelector('input[name="phone"]').value,
+            email: document.querySelector('input[name="email"]').value,
+            condition: document.querySelector('input[name="condition"]:checked').value,
+            date: document.querySelector('input[name="date"]').value,
+            signature: document.getElementById('signatureData').value,
+            reply_to: document.querySelector('input[name="email"]').value
+        };
+
+        // עדכון ממשק המשתמש לפני השליחה
         submitBtn.disabled = true;
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
 
-        // נאפשר לטופס להישלח
-        return true;
+        try {
+            const response = await emailjs.send(
+                "service_we6e19s", // מזהה השירות
+                "template_krtho9m", // תחליף במזהה התבנית שקיבלת כשיצרת את התבנית
+                formData
+            );
+
+            console.log("SUCCESS!", response.status, response.text);
+            window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
+        } catch (error) {
+            console.error("FAILED...", error);
+            showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
+            
+            submitBtn.disabled = false;
+            buttonText.style.opacity = '1';
+            buttonLoader.style.display = 'none';
+        }
     });
 });
 
