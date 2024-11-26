@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // אתחול EmailJS בגרסה הישנה
-    (function() {
-        emailjs.init("7GrJ0WpTT2VWLNhLL");
-    })();
+    // אתחול EmailJS
+    emailjs.init({
+        publicKey: "7GrJ0WpTT2VWLNhLL"
+    });
 
     let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const templateParams = {
+            to_name: "Movne Team",
             from_name: `${document.querySelector('input[name="name"]').value} ${document.querySelector('input[name="last_name"]').value}`,
             reply_to: document.querySelector('input[name="email"]').value,
             subject: "הצהרת משקיע כשיר חדשה",
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonLoader.style.display = 'block';
 
         // שליחת המייל
-        emailjs.send('service_we6e19s', 'template_3tglh8a', templateParams)
+        emailjs.send("service_we6e19s", "template_3tglh8a", templateParams)
             .then(function(response) {
                 console.log("SUCCESS!", response);
                 window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
