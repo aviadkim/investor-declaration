@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // אתחול EmailJS עם הקונפיגורציה החדשה
+    // אתחול EmailJS
     emailjs.init({
         publicKey: "7Grj0WpTT2VWLNhLL",
         blockHeadless: true,
@@ -80,8 +80,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const templateParams = {
-            to_name: "Movne Team",
+            to_email: "info@movne.co.il",
             from_name: `${document.querySelector('input[name="name"]').value} ${document.querySelector('input[name="last_name"]').value}`,
+            reply_to: document.querySelector('input[name="email"]').value,
             message: `
                 הצהרת משקיע כשיר חדשה:
 
@@ -105,8 +106,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const response = await emailjs.send(
-                "service_we6e19s",
-                "template_ho8oc6w",
+                "service_we6e19s",  // Your service ID
+                "template_ho8ecdw", // Your template ID
                 templateParams
             );
             
