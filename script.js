@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // אתחול פשוט של EmailJS
-    emailjs.init("7GrJ0WpTT2VWLNhLL");
+    // אתחול EmailJS בגרסה הישנה
+    (function() {
+        emailjs.init("7GrJ0WpTT2VWLNhLL");
+    })();
 
     let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
@@ -95,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log('Form data prepared:', templateParams);
 
-        // עדכון ממשק המשתמש לפני השליחה
+        // עדכון ממשק המשתמש
         submitBtn.disabled = true;
         buttonText.style.opacity = '0';
         buttonLoader.style.display = 'block';
