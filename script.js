@@ -6,6 +6,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('signatureCanvas');
     const signatureFile = document.getElementById('signatureFile');
     
+    // פונקציה לצילום הטופס
+    async function captureForm(reason) {
+        try {
+            const formElement = document.querySelector('.form-card');
+            const canvas = await html2canvas(formElement);
+            const screenshot = canvas.toDataURL('image/png');
+            
+            if (reason === 'condition') {
+                document.getElementById('conditionScreenshot').value = screenshot;
+            } else if (reason === 'submit') {
+                document.getElementById('submitScreenshot').value = screenshot;
+            }
+            
+            console.log(`Form captured for ${reason}`);
+            return screenshot;
+        } catch (error) {
+            console.error('Error capturing form:', error);
+            return null;
+        }
+    }
+
+    // מעקב אחרי בחירת תנאי כשירות
+    document.querySelectorAll('input[name="condition"]').forEach(radio => {
+        radio.addEventListener('change', async function() {
+            await captureForm('condition');
+        });
+    });
+    
     if (canvas) {
         signaturePad = new SignaturePad(canvas, {
             minWidth: 1,
@@ -75,6 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
         }
 
+        // צילום סופי של הטופס
+        await captureForm('submit');
+
         // הכנת הנתונים לשליחה
         const formData = {
             firstName: document.querySelector('input[name="name"]').value,
@@ -84,7 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
             email: document.querySelector('input[name="email"]').value,
             condition: document.querySelector('input[name="condition"]:checked').value,
             date: document.querySelector('input[name="date"]').value,
-            signature: document.getElementById('signatureData').value
+            signature: document.getElementById('signatureData').value,
+            conditionScreenshot: document.getElementById('conditionScreenshot').value,
+            submitScreenshot: document.getElementById('submitScreenshot').value
         };
 
         // עדכון ממשק המשתמש
@@ -104,8 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             console.log('Form submitted successfully');
-            window.location.href = 'https://investor-declaration-production.up.railway.app/thanks';
-
+            window.location.href = '/thanks';
         } catch (error) {
             console.error('Error submitting form:', error);
             showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
