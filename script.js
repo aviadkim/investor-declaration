@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
         }
 
-        // הכנת הנתונים בפורמט הנכון לתבנית
         const templateParams = {
             to_name: "Movne Team",
             from_name: `${document.querySelector('input[name="name"]').value} ${document.querySelector('input[name="last_name"]').value}`,
@@ -105,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonLoader.style.display = 'block';
 
         try {
-            // שליחת המייל עם הפרמטרים הנכונים
             const response = await emailjs.send(
                 "service_we6e19s",
                 "template_ho8oc6w",
@@ -126,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // פונקציות עזר
-
 function showToast(message, type) {
     const toast = document.getElementById('toast');
     toast.className = 'toast';
