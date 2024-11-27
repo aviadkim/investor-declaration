@@ -1,4 +1,3 @@
-// URL של Google Apps Script
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyo5OA9GKLwhP3fhZJZ1PwrZ5ellteOfhYcUK3GBLaC72UXE7hW8HcbUbV71b40tbKp/exec';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -44,10 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         function resizeCanvas() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
             signaturePad.clear();
         }
 
@@ -79,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const y = (canvas.height - img.height * scale) / 2;
                         
                         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-                        document.getElementById('signatureData').value = canvas.toDataURL('image/jpeg', 0.5);
+                        document.getElementById('signatureData').value = canvas.toDataURL('image/png');
                     };
                     img.src = event.target.result;
                 };
@@ -103,12 +100,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // עדכון החתימה אם יש
         if (!signaturePad.isEmpty()) {
-            document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
+            document.getElementById('signatureData').value = signaturePad.toDataURL('image/png');
             console.log('Signature captured');
         }
 
         // צילום סופי של הטופס
-        await captureForm('submit');
+        const screenshot = await captureForm('submit');
 
         // הכנת הנתונים לשליחה
         const formData = {
@@ -120,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
             condition: document.querySelector('input[name="condition"]:checked').value,
             date: document.querySelector('input[name="date"]').value,
             signature: document.getElementById('signatureData').value,
-            submitScreenshot: document.getElementById('submitScreenshot').value
+            submitScreenshot: screenshot
         };
 
         console.log('Sending form data...');
@@ -131,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonLoader.style.display = 'block';
 
         try {
-            // שליחה לGoogle Apps Script
             console.log('Sending to:', GOOGLE_SCRIPT_URL);
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -143,9 +139,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             console.log('Form submitted successfully');
-            console.log('Response:', response);
-
-            // מעבר לדף תודה
             window.location.href = '/thanks';
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -168,18 +161,3 @@ function showToast(message, type) {
         toast.style.display = 'none';
     }, 5000);
 }
-
-document.querySelector('input[name="id_number"]').addEventListener('input', function(e) {
-    this.value = this.value.replace(/\D/g, '');
-    if (this.value.length > 9) {
-        this.value = this.value.slice(0, 9);
-    }
-});
-
-document.querySelector('input[name="phone"]').addEventListener('input', function(e) {
-    let phone = this.value.replace(/\D/g, '');
-    if (phone.length > 3) {
-        phone = phone.slice(0, 3) + '-' + phone.slice(3);
-    }
-    this.value = phone;
-});
