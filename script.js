@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyo5OA9GKLwhP3fhZJZ1PwrZ5ellteOfhYcUK3GBLaC72UXE7hW8HcbUbV71b40tbKp/exec';
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL'; // תחליף את זה עם ה-URL החדש שלך
 
 document.addEventListener('DOMContentLoaded', function() {
     let signaturePad;
@@ -8,16 +8,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // פונקציה לצילום הטופס
     async function captureForm() {
         try {
+            console.log('Starting form capture...');
             const formElement = document.querySelector('.form-card');
+            
+            // הגדרות מיוחדות ל-html2canvas
             const canvas = await html2canvas(formElement, {
-                scale: 2,
+                scale: 2, // איכות גבוהה יותר
                 useCORS: true,
                 allowTaint: true,
                 backgroundColor: '#ffffff',
+                logging: true,
                 onrendered: function(canvas) {
+                    console.log('Form captured successfully');
                     return canvas.toDataURL('image/png', 1.0);
+                },
+                onclone: function(documentClone) {
+                    console.log('Document cloned for capture');
                 }
             });
+            
+            console.log('Form capture completed');
             return canvas.toDataURL('image/png', 1.0);
         } catch (error) {
             console.error('Error capturing form:', error);
@@ -26,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (canvas) {
+        console.log('Initializing signature pad...');
         signaturePad = new SignaturePad(canvas, {
             minWidth: 1,
             maxWidth: 2.5,
@@ -34,10 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         function resizeCanvas() {
-            canvas.width = canvas.offsetWidth * 2;
-            canvas.height = canvas.offsetHeight * 2;
-            const ctx = canvas.getContext('2d');
-            ctx.scale(2, 2);
+            // הגדרת רזולוציה גבוהה יותר
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
             signaturePad.clear();
         }
 
@@ -70,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('investorForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        console.log('Form submission started');
         
         if (signaturePad && signaturePad.isEmpty() && !document.getElementById('signatureData').value) {
             showToast('נא להוסיף חתימה או להעלות קובץ חתימה', 'error');
@@ -86,7 +99,9 @@ document.addEventListener('DOMContentLoaded', function() {
             buttonLoader.style.display = 'block';
 
             // צילום הטופס
+            console.log('Capturing form...');
             const screenshot = await captureForm();
+            console.log('Form captured');
             
             // קבלת החתימה
             const signature = !signaturePad.isEmpty() ? 
