@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyo5OA9GKLwhP3fhZJZ1PwrZ5ellteOfhYcUK3GBLaC72UXE7hW8HcbUbV71b40tbKp/exec';
-=======
 // URL של Google Apps Script
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdlXSSliTpvUzkJcxPWF4_jhihmino3P3tVe0h-zX7vtT3x1R3IQpjOAnvwBg6Ge3CVA/exec';
->>>>>>> 820ac82ff73ef34799fc7ee9e3601a6f8cee70f7
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyo5OA9GKLwhP3fhZJZ1PwrZ5ellteOfhYcUK3GBLaC72UXE7hW8HcbUbV71b40tbKp/exec';
 
 document.addEventListener('DOMContentLoaded', function() {
     let signaturePad;
@@ -39,10 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     if (canvas) {
+        console.log('Initializing signature pad...');
         signaturePad = new SignaturePad(canvas, {
             minWidth: 1,
             maxWidth: 2.5,
-            backgroundColor: 'rgb(255, 255, 255)'
+            backgroundColor: 'rgb(255, 255, 255)',
+            penColor: 'rgb(0, 0, 0)'
         });
 
         function resizeCanvas() {
@@ -55,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
+        console.log('Signature pad initialized');
 
         document.getElementById('clearSignature').addEventListener('click', () => {
             signaturePad.clear();
@@ -105,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // עדכון החתימה אם יש
         if (!signaturePad.isEmpty()) {
             document.getElementById('signatureData').value = signaturePad.toDataURL('image/jpeg', 0.5);
+            console.log('Signature captured');
         }
 
         // צילום סופי של הטופס
@@ -120,9 +120,10 @@ document.addEventListener('DOMContentLoaded', function() {
             condition: document.querySelector('input[name="condition"]:checked').value,
             date: document.querySelector('input[name="date"]').value,
             signature: document.getElementById('signatureData').value,
-            conditionScreenshot: document.getElementById('conditionScreenshot').value,
             submitScreenshot: document.getElementById('submitScreenshot').value
         };
+
+        console.log('Sending form data...');
 
         // עדכון ממשק המשתמש
         submitBtn.disabled = true;
@@ -130,11 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonLoader.style.display = 'block';
 
         try {
-<<<<<<< HEAD
-            console.log('Sending data to:', GOOGLE_SCRIPT_URL);
-=======
->>>>>>> 820ac82ff73ef34799fc7ee9e3601a6f8cee70f7
             // שליחה לGoogle Apps Script
+            console.log('Sending to:', GOOGLE_SCRIPT_URL);
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 headers: {
@@ -145,6 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             console.log('Form submitted successfully');
+            console.log('Response:', response);
+
+            // מעבר לדף תודה
             window.location.href = '/thanks';
         } catch (error) {
             console.error('Error submitting form:', error);
