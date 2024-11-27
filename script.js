@@ -1,33 +1,19 @@
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL'; // תחליף את זה עם ה-URL החדש שלך
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0iTwWmDr7XncJUPfltEtn0z_22pWAh8yxXt1kJxkCwjsU7R0-I0KeJbInwc2F2e59/exec';
 
 document.addEventListener('DOMContentLoaded', function() {
     let signaturePad;
     const canvas = document.getElementById('signatureCanvas');
     const signatureFile = document.getElementById('signatureFile');
     
-    // פונקציה לצילום הטופס
     async function captureForm() {
         try {
-            console.log('Starting form capture...');
             const formElement = document.querySelector('.form-card');
-            
-            // הגדרות מיוחדות ל-html2canvas
             const canvas = await html2canvas(formElement, {
-                scale: 2, // איכות גבוהה יותר
+                scale: 2,
                 useCORS: true,
                 allowTaint: true,
-                backgroundColor: '#ffffff',
-                logging: true,
-                onrendered: function(canvas) {
-                    console.log('Form captured successfully');
-                    return canvas.toDataURL('image/png', 1.0);
-                },
-                onclone: function(documentClone) {
-                    console.log('Document cloned for capture');
-                }
+                backgroundColor: '#ffffff'
             });
-            
-            console.log('Form capture completed');
             return canvas.toDataURL('image/png', 1.0);
         } catch (error) {
             console.error('Error capturing form:', error);
@@ -36,20 +22,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (canvas) {
-        console.log('Initializing signature pad...');
         signaturePad = new SignaturePad(canvas, {
             minWidth: 1,
             maxWidth: 2.5,
-            backgroundColor: 'rgb(255, 255, 255)',
-            penColor: 'rgb(0, 0, 0)'
+            backgroundColor: 'rgb(255, 255, 255)'
         });
 
         function resizeCanvas() {
-            // הגדרת רזולוציה גבוהה יותר
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
+            canvas.width = canvas.offsetWidth * 2;
+            canvas.height = canvas.offsetHeight * 2;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(2, 2);
             signaturePad.clear();
         }
 
@@ -82,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('investorForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        console.log('Form submission started');
         
         if (signaturePad && signaturePad.isEmpty() && !document.getElementById('signatureData').value) {
             showToast('נא להוסיף חתימה או להעלות קובץ חתימה', 'error');
@@ -97,16 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
             buttonText.style.opacity = '0';
             buttonLoader.style.display = 'block';
-
-            // צילום הטופס
-            console.log('Capturing form...');
-            const screenshot = await captureForm();
-            console.log('Form captured');
             
             // קבלת החתימה
             const signature = !signaturePad.isEmpty() ? 
                 signaturePad.toDataURL('image/png', 1.0) : 
                 document.getElementById('signatureData').value;
+            
+            // צילום הטופס
+            const screenshot = await captureForm();
 
             const formData = {
                 firstName: document.querySelector('input[name="name"]').value,
@@ -130,11 +110,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(formData)
             });
 
-            console.log('Form submitted successfully');
             window.location.href = '/thanks';
         } catch (error) {
             console.error('Error:', error);
-            showToast('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.', 'error');
+            showToast('אירעה שגיאה בשליחת הטופס', 'error');
             
             submitBtn.disabled = false;
             buttonText.style.opacity = '1';
