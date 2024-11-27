@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyo5OA9GKLwhP3fhZJZ1PwrZ5ellteOfhYcUK3GBLaC72UXE7hW8HcbUbV71b40tbKp/exec';
+=======
+// URL של Google Apps Script
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdlXSSliTpvUzkJcxPWF4_jhihmino3P3tVe0h-zX7vtT3x1R3IQpjOAnvwBg6Ge3CVA/exec';
+>>>>>>> 820ac82ff73ef34799fc7ee9e3601a6f8cee70f7
 
 document.addEventListener('DOMContentLoaded', function() {
     let signaturePad;
@@ -125,7 +130,10 @@ document.addEventListener('DOMContentLoaded', function() {
         buttonLoader.style.display = 'block';
 
         try {
+<<<<<<< HEAD
             console.log('Sending data to:', GOOGLE_SCRIPT_URL);
+=======
+>>>>>>> 820ac82ff73ef34799fc7ee9e3601a6f8cee70f7
             // שליחה לGoogle Apps Script
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
